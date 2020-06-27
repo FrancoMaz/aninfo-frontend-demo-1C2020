@@ -1,0 +1,36 @@
+.transaction-page {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.transaction-name {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.input-amount {
+    display: flex;
+    justify-content: center;
+}
+
+.input-label {
+    font-size: 20px;
+    margin-right: 25px;
+}
+
+.buttons {
+    margin-top: 25px;
+}
+
+.cancel-button {
+    background-color: #000088;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+    margin-right: 15px;
+}
+
+.action-button {
+    background-color: #008800;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+}

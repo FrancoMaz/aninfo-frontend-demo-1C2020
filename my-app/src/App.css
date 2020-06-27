@@ -1,0 +1,34 @@
+.app {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.title {
+  font-size: 30px;
+}
+
+.cbu {
+    color: #0074D9;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.amount {
+    font-size: 40px;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.options {
+    display: flex;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.options div {
+    margin: 0 10px;
+}
+
+.img_label {
+    font-size: 13px;
+}
