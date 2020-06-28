@@ -17,13 +17,9 @@ export default class TransactionPage extends React.Component {
     };
 
     hidePage = () => {
-        this.setState({show: false})
+        this.setState({show: false});
+        this.props.showMainPage();
     };
-
-    handleSubmit = () => {
-
-    };
-
 
     render() {
 
@@ -39,7 +35,7 @@ export default class TransactionPage extends React.Component {
                         <button className="cancel-button" onClick={this.hidePage}>Cancelar</button>
                         <button className="action-button">{this.props.action}</button>
                     </div>
-                </div> : <MainPage />
+                </div> : null
 
         )
     }

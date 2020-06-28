@@ -20,6 +20,10 @@ export default class MainPage extends React.Component {
         this.setState({transaction: type, show: false})
     };
 
+    showMainPage = () => {
+        this.setState({transaction: null, show: true})
+    };
+
 
     render() {
 
@@ -30,11 +34,11 @@ export default class MainPage extends React.Component {
                     <div className="cbu">CBU {this.state.cbu}</div>
                     <div className="amount">$ {this.state.amount}</div>
                     <div className="options">
-                        <div onClick={this.doTransaction("extract")}>
+                        <div onClick={() => this.doTransaction("extract")}>
                             <img src={extractIcon}/>
                             <div className="img_label">Extraer</div>
                         </div>
-                        <div onClick={this.doTransaction("deposit")}>
+                        <div onClick={() => this.doTransaction("deposit")}>
                             <img src={depositIcon}/>
                             <div className="img_label">Depositar</div>
                         </div>
@@ -42,8 +46,8 @@ export default class MainPage extends React.Component {
                     <AccountList />
                 </div> :
                 (this.state.transaction === "extract" ?
-                    <TransactionPage action="Extraer"/>
-                    : <TransactionPage action="Depositar"/>)
+                    <TransactionPage action="Extraer" showMainPage={this.showMainPage}/>
+                    : <TransactionPage action="Depositar" showMainPage={this.showMainPage}/>)
 
         )
     }
