@@ -10,7 +10,7 @@ export default class MainPage extends React.Component {
         super(props);
         this.state = {
             cbu: "928472923745271912736",
-            amount: 104.45,
+            amount: 100,
             transaction: null,
             show: true,
             transactionList: []
