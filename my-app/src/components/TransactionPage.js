@@ -36,6 +36,10 @@ export default class TransactionPage extends React.Component {
         }
     };
 
+    hideConfirmation = () => {
+        this.setState({showConfirmation: false})
+    };
+
     render() {
 
         let confirmation = null;
@@ -44,7 +48,8 @@ export default class TransactionPage extends React.Component {
 
         if (this.state.showConfirmation) {
             confirmation = <Confirmation amount={this.state.amount} action={this.props.action} changeAmount={this.props.changeAmount}
-                                         totalAmount={this.props.totalAmount} hidePage={this.hidePage} addTransaction={this.props.addTransaction}/>
+                                         totalAmount={this.props.totalAmount} hidePage={this.hidePage} addTransaction={this.props.addTransaction}
+                                         hideConfirmation={this.hideConfirmation}/>
         }
 
         if (this.state.error !== "") {
