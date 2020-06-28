@@ -9,7 +9,9 @@ export default class Confirmation extends React.Component {
 
     changeAmount = () => {
         let newAmount = this.props.action === "Extraer" ? (parseFloat(this.props.totalAmount) - parseFloat(this.props.amount)) : (parseFloat(this.props.totalAmount) + parseFloat(this.props.amount));
+        let action = this.props.action === "Extraer" ? "Extracción" : "Depósito";
         this.props.changeAmount(newAmount);
+        this.props.addTransaction(action + " de $" + this.props.amount);
         this.props.hidePage();
     };
 

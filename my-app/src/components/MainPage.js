@@ -1,7 +1,7 @@
 import React from "react";
 import extractIcon from "../extraer_icono.svg";
 import depositIcon from "../depositar_icono.svg";
-import AccountList from "./AccountList";
+import TransactionList from "./TransactionList";
 import TransactionPage from "./TransactionPage";
 
 export default class MainPage extends React.Component {
@@ -12,7 +12,8 @@ export default class MainPage extends React.Component {
             cbu: "928472923745271912736",
             amount: 104.45,
             transaction: null,
-            show: true
+            show: true,
+            transactionList: []
         }
     }
 
@@ -26,6 +27,10 @@ export default class MainPage extends React.Component {
 
     changeAmount = (amount) => {
       this.setState({amount: amount, transaction: null, show: true})
+    };
+
+    addTransaction = (transaction) => {
+        this.setState({transactionList: [transaction].concat(this.state.transactionList)})
     };
 
 
@@ -47,11 +52,11 @@ export default class MainPage extends React.Component {
                             <div className="img_label">Depositar</div>
                         </div>
                     </div>
-                    <AccountList />
+                    <TransactionList transactions={this.state.transactionList}/>
                 </div> :
                 (this.state.transaction === "extract" ?
-                    <TransactionPage action="Extraer" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount}/>
-                    : <TransactionPage action="Depositar" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount}/>)
+                    <TransactionPage action="Extraer" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount} addTransaction={this.addTransaction}/>
+                    : <TransactionPage action="Depositar" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount} addTransaction={this.addTransaction}/>)
 
         )
     }
