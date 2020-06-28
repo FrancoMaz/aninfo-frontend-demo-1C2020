@@ -1,6 +1,7 @@
 import React from "react";
 import Confirmation from "./Confirmation";
 import "./TransactionPage.css";
+import Error from "./Error";
 
 export default class TransactionPage extends React.Component {
 
@@ -19,11 +20,19 @@ export default class TransactionPage extends React.Component {
         this.props.showMainPage();
     };
 
-    showConfirmation = () => {
+    validateInput = () => {
         if (this.refs.myInput !== null) {
-            let input = this.refs.myInput;
-            let inputValue = input.value;
-            this.setState({showConfirmation: true, amount: inputValue});
+            let inputValue = parseFloat(this.refs.myInput.value);
+            if (inputValue < 0 || inputValue > 100) {
+                this.setState({error: "Por favor, ingrese un monto entre 0 y 100"});
+                return;
+            }
+            if (this.props.action === "Extraer" && this.props.totalAmount - inputValue < 0) {
+                this.setState({error: "El saldo no puede quedar negativo"});
+                return;
+            }
+
+            this.setState({error: "", showConfirmation: true, amount: inputValue});
         }
     };
 
@@ -31,9 +40,14 @@ export default class TransactionPage extends React.Component {
 
         let confirmation = null;
         let page = null;
+        let error = null;
 
         if (this.state.showConfirmation) {
             confirmation = <Confirmation amount={this.state.amount} action={this.props.action} changeAmount={this.props.changeAmount} totalAmount={this.props.totalAmount} hidePage={this.hidePage}/>
+        }
+
+        if (this.state.error !== "") {
+            error = <Error message={this.state.error}/>
         }
 
         if (this.state.show) {
@@ -45,7 +59,7 @@ export default class TransactionPage extends React.Component {
                         </div>
                         <div className="buttons">
                             <button className="cancel-button" onClick={this.hidePage}>Cancelar</button>
-                            <input type="button" value={this.props.action} className="action-button" onClick={this.showConfirmation}/>
+                            <input type="button" value={this.props.action} className="action-button" onClick={this.validateInput}/>
                         </div>
                     </div>
         }
@@ -53,6 +67,7 @@ export default class TransactionPage extends React.Component {
         return (
             <div>
                 {page}
+                {error}
                 {confirmation}
             </div>
 
