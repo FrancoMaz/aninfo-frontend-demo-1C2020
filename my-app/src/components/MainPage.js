@@ -24,6 +24,10 @@ export default class MainPage extends React.Component {
         this.setState({transaction: null, show: true})
     };
 
+    changeAmount = (amount) => {
+      this.setState({amount: amount, transaction: null, show: true})
+    };
+
 
     render() {
 
@@ -46,8 +50,8 @@ export default class MainPage extends React.Component {
                     <AccountList />
                 </div> :
                 (this.state.transaction === "extract" ?
-                    <TransactionPage action="Extraer" showMainPage={this.showMainPage}/>
-                    : <TransactionPage action="Depositar" showMainPage={this.showMainPage}/>)
+                    <TransactionPage action="Extraer" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount}/>
+                    : <TransactionPage action="Depositar" showMainPage={this.showMainPage} changeAmount={this.changeAmount} totalAmount={this.state.amount}/>)
 
         )
     }
