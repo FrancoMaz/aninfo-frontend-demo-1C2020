@@ -17,7 +17,7 @@ export default class MainPage extends React.Component {
 
     componentDidMount() {
 
-        /*fetch('https://memo1-bank-app.herokuapp.com/accounts/1', {
+        fetch('https://memo1-bank-app.herokuapp.com/accounts/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -48,7 +48,7 @@ export default class MainPage extends React.Component {
                 this.setState({
                     transactionList: response
                 })
-            })*/
+            })
 
     }
 

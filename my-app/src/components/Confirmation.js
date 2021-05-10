@@ -20,8 +20,6 @@ export default class Confirmation extends React.Component {
             .catch((error) => console.error('Error:', error))
             .then((response) => {
                 console.log(response);
-                this.props.changeAmount(response.balance);
-
             })
         this.props.hidePage();
     };
