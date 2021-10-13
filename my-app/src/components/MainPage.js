@@ -17,7 +17,7 @@ export default class MainPage extends React.Component {
 
     componentDidMount() {
 
-        /*fetch('https://memo1-bank-app.herokuapp.com/accounts/1', {
+        fetch('https://memo1-bank-app.herokuapp.com/accounts/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -48,12 +48,15 @@ export default class MainPage extends React.Component {
                 this.setState({
                     transactionList: response
                 })
-            })*/
+            })
 
     }
 
     doTransaction = (type) => {
-        this.props.history.push("/transaction/" + type);
+        this.props.history.push({
+            pathname: "/transaction/" + type,
+            state: { amount: this.state.amount }
+        });
     };
 
     render() {

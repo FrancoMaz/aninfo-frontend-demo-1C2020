@@ -25,6 +25,11 @@ export default class TransactionPage extends React.Component {
                 this.setState({error: "Por favor, ingrese un monto entre 0 y 100"});
                 return;
             }
+            if (this.props.match.params.type === "withdrawal" &&
+                this.props.location.state.amount - inputValue < 0) {
+                this.setState({error: "El monto ingresado no puede ser mayor que el que hay en la cuenta"});
+                return;
+            }
 
             this.setState({error: "", showConfirmation: true, amount: inputValue});
         }
