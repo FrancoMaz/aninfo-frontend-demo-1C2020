@@ -27,10 +27,12 @@
     color: #FFFFFFFF;
     padding: 5px 10px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .action-button {
     background-color: #008800;
     color: #FFFFFFFF;
     padding: 5px 10px;
+    cursor: pointer;
 }

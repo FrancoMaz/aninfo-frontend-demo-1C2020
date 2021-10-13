@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import MainPage from "./components/MainPage";
+import {Routes} from "./routes";
 
 /**
  * @return {boolean}
@@ -9,15 +8,12 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            show: true
-        }
     }
 
     render() {
 
         return (
-            <MainPage />
+            <Routes />
         )
     }
 }

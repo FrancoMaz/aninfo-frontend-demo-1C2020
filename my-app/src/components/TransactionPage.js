@@ -8,7 +8,6 @@ export default class TransactionPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: true,
             showConfirmation: false,
             amount: 0,
             error: ""
@@ -16,8 +15,7 @@ export default class TransactionPage extends React.Component {
     }
 
     hidePage = () => {
-        this.setState({show: false});
-        this.props.showMainPage();
+        this.props.history.push("/");
     };
 
     validateInput = () => {
@@ -27,8 +25,9 @@ export default class TransactionPage extends React.Component {
                 this.setState({error: "Por favor, ingrese un monto entre 0 y 100"});
                 return;
             }
-            if (this.props.action === "Extraer" && this.props.totalAmount - inputValue < 0) {
-                this.setState({error: "El saldo no puede quedar negativo"});
+            if (this.props.match.params.type === "withdrawal" &&
+                this.props.location.state.amount - inputValue < 0) {
+                this.setState({error: "El monto ingresado no puede ser mayor que el que hay en la cuenta"});
                 return;
             }
 
@@ -43,32 +42,30 @@ export default class TransactionPage extends React.Component {
     render() {
 
         let confirmation = null;
-        let page = null;
+        let page;
         let error = null;
+        let action = this.props.match.params.type === "deposit" ? "Depositar" : "Extraer";
 
         if (this.state.showConfirmation) {
-            confirmation = <Confirmation amount={this.state.amount} action={this.props.action} changeAmount={this.props.changeAmount}
-                                         totalAmount={this.props.totalAmount} hidePage={this.hidePage} addTransaction={this.props.addTransaction}
-                                         hideConfirmation={this.hideConfirmation}/>
+            confirmation = <Confirmation amount={this.state.amount} action={action}
+                                         hidePage={this.hidePage} hideConfirmation={this.hideConfirmation}/>
         }
 
         if (this.state.error !== "") {
             error = <Error message={this.state.error}/>
         }
 
-        if (this.state.show) {
-            page = <div className="transaction-page">
-                        <div className="transaction-name">{this.props.action}</div>
-                        <div className="input-amount">
-                            <div className="input-label">Monto</div>
-                            <input type="text" ref="myInput" />
-                        </div>
-                        <div className="buttons">
-                            <button className="cancel-button" onClick={this.hidePage}>Cancelar</button>
-                            <input type="button" value={this.props.action} className="action-button" onClick={this.validateInput}/>
-                        </div>
+        page = <div className="transaction-page">
+                    <div className="transaction-name">{action}</div>
+                    <div className="input-amount">
+                        <div className="input-label">Monto</div>
+                        <input type="text" ref="myInput" />
                     </div>
-        }
+                    <div className="buttons">
+                        <button className="cancel-button" onClick={this.hidePage}>Cancelar</button>
+                        <button onClick={this.validateInput} className="action-button">{action}</button>
+                    </div>
+                </div>
 
         return (
             <div>

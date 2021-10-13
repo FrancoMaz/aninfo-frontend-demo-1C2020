@@ -8,11 +8,20 @@ export default class Confirmation extends React.Component {
     }
 
     changeAmount = () => {
-        let newAmount = this.props.action === "Extraer" ? (parseFloat(this.props.totalAmount) - parseFloat(this.props.amount)) : (parseFloat(this.props.totalAmount) + parseFloat(this.props.amount));
-        let action = this.props.action === "Extraer" ? "Extracción" : "Depósito";
-        this.props.changeAmount(newAmount);
-        this.props.addTransaction(action + " de $" + this.props.amount);
-        this.props.hidePage();
+        let path = this.props.action === "Extraer" ? "withdraw" : "deposit";
+        fetch('https://memo1-bank-app.herokuapp.com/accounts/1/' + path + '?sum=' + parseFloat(this.props.amount), {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error('Error:', error))
+            .then((response) => {
+                console.log(response);
+                this.props.hidePage();
+            })
     };
 
     render() {
