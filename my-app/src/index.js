@@ -5,11 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainPage from "./components/MainPage";
 import TransactionPage from "./components/TransactionPage";
+import Login from "./components/Login";
 
 ReactDOM.render(
     <BrowserRouter>
         <Routes>
-            <Route path='/' element={<MainPage />} />
+            <Route path='/' element={<Login />} />
+            <Route path='/home' element={<MainPage />} />
             <Route path='/transaction/:type' element={<TransactionPage />} />
         </Routes>
     </BrowserRouter>,

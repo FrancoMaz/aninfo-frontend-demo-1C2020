@@ -36,3 +36,11 @@
 .transaction-option {
     cursor: pointer;
 }
+
+.return-button {
+    background-color: #000088;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}

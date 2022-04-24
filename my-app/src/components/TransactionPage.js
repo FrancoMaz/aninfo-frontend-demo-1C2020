@@ -15,18 +15,22 @@ export default function TransactionPage() {
     let action = location.state.action === "deposit" ? "Depositar" : "Extraer";
 
     function hidePage() {
-        navigate('/');
+        navigate('/home', {
+            state: {
+                amount: location.state.amount,
+                cbu: location.state.cbu
+            }
+        });
     }
 
     function validateInput() {
-        console.log(inputRef.current.value);
         if (inputRef.current.value !== "") {
             let inputValue = parseFloat(inputRef.current.value);
             if (inputValue < 0 || inputValue > 100) {
                 setError("Por favor, ingrese un monto entre 1 y 100");
                 return;
             }
-            if (location.state.type === "withdrawal" &&
+            if (location.state.action === "withdrawal" &&
                 location.state.amount - inputValue < 0) {
                 setError("El monto ingresado no puede ser mayor que el que hay en la cuenta");
                 return;
@@ -61,7 +65,8 @@ export default function TransactionPage() {
             }
             {showConfirmation &&
                 <Confirmation amount={amount} action={action}
-                              hideConfirmation={hideConfirmation}/>
+                              hideConfirmation={hideConfirmation}
+                              cbu={location.state.cbu}/>
             }
         </div>
 

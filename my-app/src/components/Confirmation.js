@@ -6,14 +6,19 @@ export default function Confirmation(props) {
 
     let navigate = useNavigate();
 
-    function hidePage() {
-        navigate('/');
+    function hidePage(response) {
+        navigate('/home', {
+            state: {
+                cbu: response.cbu,
+                amount: response.balance
+            }
+        });
     }
 
     function changeAmount() {
-        console.log(props.amount);
         let path = props.action === "Extraer" ? "withdraw" : "deposit";
-        fetch('https://memo1-bank-app.herokuapp.com/accounts/5/' + path + '?sum=' + parseFloat(props.amount), {
+        fetch('https://memo1-bank-app.herokuapp.com/accounts/' +
+            props.cbu + '/' + path + '?sum=' + parseFloat(props.amount), {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
@@ -23,8 +28,7 @@ export default function Confirmation(props) {
             .then((res) => res.json())
             .catch((error) => console.error('Error:', error))
             .then((response) => {
-                console.log(response);
-                hidePage();
+                hidePage(response);
             })
     }
     return (
