@@ -1,15 +1,19 @@
 import React from "react";
 import "./Confirmation.css";
+import {useNavigate} from "react-router-dom";
 
-export default class Confirmation extends React.Component {
+export default function Confirmation(props) {
 
-    constructor(props) {
-        super(props);
+    let navigate = useNavigate();
+
+    function hidePage() {
+        navigate('/');
     }
 
-    changeAmount = () => {
-        let path = this.props.action === "Extraer" ? "withdraw" : "deposit";
-        fetch('https://memo1-bank-app.herokuapp.com/accounts/1/' + path + '?sum=' + parseFloat(this.props.amount), {
+    function changeAmount() {
+        console.log(props.amount);
+        let path = props.action === "Extraer" ? "withdraw" : "deposit";
+        fetch('https://memo1-bank-app.herokuapp.com/accounts/5/' + path + '?sum=' + parseFloat(props.amount), {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
@@ -20,22 +24,17 @@ export default class Confirmation extends React.Component {
             .catch((error) => console.error('Error:', error))
             .then((response) => {
                 console.log(response);
-                this.props.hidePage();
+                hidePage();
             })
-    };
-
-    render() {
-
-        return (
-            <div className="confirmation">
-                <div className="confirmation-title">Confirmación</div>
-                <div className="confirmation-text">Desea {this.props.action} ${this.props.amount} en su cuenta?</div>
-                <div className="confirmation-options">
-                    <div className="first-option" onClick={this.props.hideConfirmation}>No</div>
-                    <div onClick={this.changeAmount}>Sí</div>
-                </div>
-            </div>
-
-        )
     }
+    return (
+        <div className="confirmation">
+            <div className="confirmation-title">Confirmación</div>
+            <div className="confirmation-text">Desea {props.action} ${props.amount} en su cuenta?</div>
+            <div className="confirmation-options">
+                <div className="first-option" onClick={props.hideConfirmation}>No</div>
+                <div onClick={changeAmount}>Sí</div>
+            </div>
+        </div>
+    )
 }

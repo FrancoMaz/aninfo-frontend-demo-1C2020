@@ -1,5 +1,7 @@
 import React from 'react';
-import {Routes} from "./routes";
+import {Route, Routes} from "react-router-dom";
+import MainPage from "./components/MainPage";
+import TransactionPage from "./components/TransactionPage";
 
 /**
  * @return {boolean}
@@ -11,9 +13,11 @@ export default class App extends React.Component {
     }
 
     render() {
-
         return (
-            <Routes />
+            <Routes>
+                <Route path='/' component={MainPage} />
+                <Route path='/transaction/:type' component={TransactionPage} />
+            </Routes>
         )
     }
 }

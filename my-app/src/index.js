@@ -2,13 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes } from './routes';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import MainPage from "./components/MainPage";
+import TransactionPage from "./components/TransactionPage";
 
 ReactDOM.render(
-    <Router>
-        <Routes />
-    </Router>,
+    <BrowserRouter>
+        <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/transaction/:type' element={<TransactionPage />} />
+        </Routes>
+    </BrowserRouter>,
     document.getElementById('root')
 )
 
