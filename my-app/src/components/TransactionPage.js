@@ -1,79 +1,74 @@
-import React from "react";
+import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import Confirmation from "./Confirmation";
 import "./TransactionPage.css";
 import Error from "./Error";
+import { useNavigate, useLocation } from 'react-router-dom';
 
-export default class TransactionPage extends React.Component {
+export default function TransactionPage() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            showConfirmation: false,
-            amount: 0,
-            error: ""
-        }
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [amount, setAmount] = useState(0);
+    const [error, setError] = useState("");
+    const location = useLocation();
+    let navigate = useNavigate();
+    let inputRef = useRef(null);
+    let action = location.state.action === "deposit" ? "Depositar" : "Extraer";
+
+    function hidePage() {
+        navigate('/home', {
+            state: {
+                amount: location.state.amount,
+                cbu: location.state.cbu
+            }
+        });
     }
 
-    hidePage = () => {
-        this.props.history.push("/");
-    };
-
-    validateInput = () => {
-        if (this.refs.myInput !== null) {
-            let inputValue = parseFloat(this.refs.myInput.value);
+    function validateInput() {
+        if (inputRef.current.value !== "") {
+            let inputValue = parseFloat(inputRef.current.value);
             if (inputValue < 0 || inputValue > 100) {
-                this.setState({error: "Por favor, ingrese un monto entre 0 y 100"});
+                setError("Por favor, ingrese un monto entre 1 y 100");
                 return;
             }
-            if (this.props.match.params.type === "withdrawal" &&
-                this.props.location.state.amount - inputValue < 0) {
-                this.setState({error: "El monto ingresado no puede ser mayor que el que hay en la cuenta"});
+            if (location.state.action === "withdrawal" &&
+                location.state.amount - inputValue < 0) {
+                setError("El monto ingresado no puede ser mayor que el que hay en la cuenta");
                 return;
             }
-
-            this.setState({error: "", showConfirmation: true, amount: inputValue});
+            setError("");
+            setShowConfirmation(true);
+            setAmount(inputValue);
+        } else {
+            setError("El campo Monto no puede estar vacío");
         }
-    };
-
-    hideConfirmation = () => {
-        this.setState({showConfirmation: false})
-    };
-
-    render() {
-
-        let confirmation = null;
-        let page;
-        let error = null;
-        let action = this.props.match.params.type === "deposit" ? "Depositar" : "Extraer";
-
-        if (this.state.showConfirmation) {
-            confirmation = <Confirmation amount={this.state.amount} action={action}
-                                         hidePage={this.hidePage} hideConfirmation={this.hideConfirmation}/>
-        }
-
-        if (this.state.error !== "") {
-            error = <Error message={this.state.error}/>
-        }
-
-        page = <div className="transaction-page">
-                    <div className="transaction-name">{action}</div>
-                    <div className="input-amount">
-                        <div className="input-label">Monto</div>
-                        <input type="text" ref="myInput" />
-                    </div>
-                    <div className="buttons">
-                        <button className="cancel-button" onClick={this.hidePage}>Cancelar</button>
-                        <button onClick={this.validateInput} className="action-button">{action}</button>
-                    </div>
-                </div>
-
-        return (
-            <div>
-                {page}
-                {error}
-                {confirmation}
-            </div>
-
-        )
     }
+
+    function hideConfirmation() {
+        setShowConfirmation(false);
+    }
+
+    return (
+        <div>
+            <div className="transaction-page">
+                <div className="transaction-name">{action}</div>
+                <div className="input-amount">
+                    <div className="input-label">Monto</div>
+                    <input type="text" ref={inputRef} />
+                </div>
+                <div className="buttons">
+                    <button className="cancel-button" onClick={hidePage}>Cancelar</button>
+                    <button onClick={validateInput} className="action-button">{action}</button>
+                </div>
+            </div>
+            {error !== "" &&
+                <Error message={error}/>
+            }
+            {showConfirmation &&
+                <Confirmation amount={amount} action={action}
+                              hideConfirmation={hideConfirmation}
+                              cbu={location.state.cbu}/>
+            }
+        </div>
+
+    )
 }

@@ -1,0 +1,37 @@
+.login-page {
+    margin: 40px auto;
+    text-align: center;
+}
+
+.create-account-button {
+    background-color: #000088;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: #000088;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.input-cbu {
+    margin-top: 10px;
+}
+
+.input-label {
+    font-size: 20px;
+    margin-top: 25px;
+}
+
+.validate-login-button {
+    background-color: #000088;
+    color: #FFFFFFFF;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
